@@ -84,7 +84,10 @@
   ],
   "targetDefaults": {
     "test": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build"],
+      "options": {
+        "command": "node ../../node_modules/jest/bin/jest.js"
+      }
     }
   },
   "generators": {
