@@ -1,0 +1,197 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+# Node version is sourced from .nvmrc so the local dev shell and CI runners
+# stay in lockstep — bump it in one place.
+
+jobs:
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Install dependencies and populate the npm cache so every other job is fast.
+  # ─────────────────────────────────────────────────────────────────────────────
+  install:
+    name: Install dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: npm
+
+      - name: Upgrade npm to latest
+        run: npm install -g npm@latest
+
+      # We use `npm install` instead of `npm ci` because the lockfile is
+      # platform-sensitive (optional deps like @nx/detox and platform-specific
+      # native binaries like @nx/nx-linux-x64-gnu are included on Linux but
+      # skipped on macOS). `npm ci` rejects the drift; `npm install` reconciles
+      # it. We can't pass --omit=optional because Nx's native Rust binary is
+      # itself an optional dep — without it `nx` throws
+      # 'WorkspaceContext is not a constructor'.
+      - name: Install
+        run: npm install --no-audit --no-fund --prefer-offline
+
+      # `npm install` may have updated package-lock.json (the optional @nx/detox
+      # tree differs across platforms). Reset it so the cache key derived from
+      # hashFiles('package-lock.json') matches the value the downstream jobs
+      # (which checkout fresh) compute.
+      - name: Restore lockfile from git
+        run: git checkout -- package-lock.json
+
+      - name: Cache node_modules
+        uses: actions/cache/save@v4
+        with:
+          path: node_modules
+          # Include the workflow file in the cache key so changes to install
+          # flags (e.g. dropping --omit=optional) bust the cache automatically.
+          # GitHub Actions caches are immutable — once a key is taken on a
+          # branch, save is a silent no-op and downstream jobs restore stale
+          # contents.
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json', '.github/workflows/ci.yml') }}
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Lint — all affected projects
+  # ─────────────────────────────────────────────────────────────────────────────
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    needs: install
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Restore node_modules
+        uses: actions/cache/restore@v4
+        with:
+          path: node_modules
+          # Include the workflow file in the cache key so changes to install
+          # flags (e.g. dropping --omit=optional) bust the cache automatically.
+          # GitHub Actions caches are immutable — once a key is taken on a
+          # branch, save is a silent no-op and downstream jobs restore stale
+          # contents.
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json', '.github/workflows/ci.yml') }}
+
+      - uses: nrwl/nx-set-shas@v4
+
+      - name: Lint affected
+        run: npx nx affected -t lint --parallel=3
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Type-check — all affected projects
+  # ─────────────────────────────────────────────────────────────────────────────
+  typecheck:
+    name: Typecheck
+    runs-on: ubuntu-latest
+    needs: install
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Restore node_modules
+        uses: actions/cache/restore@v4
+        with:
+          path: node_modules
+          # Include the workflow file in the cache key so changes to install
+          # flags (e.g. dropping --omit=optional) bust the cache automatically.
+          # GitHub Actions caches are immutable — once a key is taken on a
+          # branch, save is a silent no-op and downstream jobs restore stale
+          # contents.
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json', '.github/workflows/ci.yml') }}
+
+      - uses: nrwl/nx-set-shas@v4
+
+      - name: Typecheck affected
+        run: npx nx affected -t typecheck --parallel=3
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Test — vitest for all affected projects (mobile stays on jest-expo)
+  # ─────────────────────────────────────────────────────────────────────────────
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    needs: install
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Restore node_modules
+        uses: actions/cache/restore@v4
+        with:
+          path: node_modules
+          # Include the workflow file in the cache key so changes to install
+          # flags (e.g. dropping --omit=optional) bust the cache automatically.
+          # GitHub Actions caches are immutable — once a key is taken on a
+          # branch, save is a silent no-op and downstream jobs restore stale
+          # contents.
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json', '.github/workflows/ci.yml') }}
+
+      - uses: nrwl/nx-set-shas@v4
+
+      # api-e2e excluded because it requires a live server.
+      # mobile excluded because the Nx-generated App.spec.tsx fails to parse
+      # under jest-expo (issue exists since ef21943 — predates this PR; tracked
+      # for a follow-up that overhauls mobile testing).
+      - name: Test affected
+        run: >
+          npx nx affected -t test --parallel=3
+          --exclude=@hannature-system/api-e2e,@hannature-system/mobile
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Build — affected web/backoffice/api + libs.
+  # Mobile (Expo native build) and api-e2e are excluded from CI build.
+  # ─────────────────────────────────────────────────────────────────────────────
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    needs: install
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Restore node_modules
+        uses: actions/cache/restore@v4
+        with:
+          path: node_modules
+          # Include the workflow file in the cache key so changes to install
+          # flags (e.g. dropping --omit=optional) bust the cache automatically.
+          # GitHub Actions caches are immutable — once a key is taken on a
+          # branch, save is a silent no-op and downstream jobs restore stale
+          # contents.
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json', '.github/workflows/ci.yml') }}
+
+      - uses: nrwl/nx-set-shas@v4
+
+      - name: Build affected (excluding mobile and api-e2e)
+        run: >
+          npx nx affected -t build --parallel=3
+          --exclude=@hannature-system/mobile,@hannature-system/api-e2e

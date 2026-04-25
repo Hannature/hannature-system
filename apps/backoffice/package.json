@@ -3,14 +3,28 @@
   "version": "0.0.1",
   "private": true,
   "nx": {
+    "targets": {
+      "test": {
+        "executor": "@nx/vitest:test",
+        "options": {
+          "configFile": "apps/backoffice/vitest.config.ts"
+        }
+      }
+    },
     "tags": [
       "scope:backoffice",
       "type:app"
     ]
   },
   "dependencies": {
+    "@hannature/design-tokens": "*",
     "next": "~16.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "*",
+    "postcss": "*",
+    "tailwindcss": "*"
   }
 }

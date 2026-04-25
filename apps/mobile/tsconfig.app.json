@@ -29,7 +29,8 @@
     "src/**/*.test.ts",
     "eslint.config.js",
     "eslint.config.cjs",
-    "eslint.config.mjs"
+    "eslint.config.mjs",
+    "tailwind.config.ts"
   ],
   "include": [
     "**/*.ts",
@@ -37,6 +38,12 @@
     "**/*.js",
     "**/*.jsx",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts"
+    "expo-env.d.ts",
+    "nativewind-env.d.ts"
+  ],
+  "references": [
+    {
+      "path": "../../libs/design-tokens/tsconfig.lib.json"
+    }
   ]
 }

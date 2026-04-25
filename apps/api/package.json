@@ -76,8 +76,9 @@
         }
       },
       "test": {
+        "executor": "@nx/vitest:test",
         "options": {
-          "passWithNoTests": true
+          "configFile": "apps/api/vitest.config.ts"
         }
       }
     },
