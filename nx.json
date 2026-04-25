@@ -10,6 +10,7 @@
       "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
       "!{projectRoot}/tsconfig.spec.json",
       "!{projectRoot}/jest.config.[jt]s",
+      "!{projectRoot}/vitest.config.[jt]s",
       "!{projectRoot}/src/test-setup.[jt]s",
       "!{projectRoot}/test-setup.[jt]s"
     ],
@@ -49,10 +50,19 @@
     },
     {
       "plugin": "@nx/jest/plugin",
+      "include": ["apps/mobile/**/*"],
       "options": {
         "targetName": "test"
-      },
-      "exclude": ["apps/api-e2e/**/*"]
+      }
+    },
+    {
+      "plugin": "@nx/vitest/plugin",
+      "exclude": ["apps/mobile/**/*", "apps/api-e2e/**/*"],
+      "options": {
+        "testTargetName": "test",
+        "ciTargetName": "test-ci",
+        "testMode": "run"
+      }
     },
     {
       "plugin": "@nx/next/plugin",
@@ -84,10 +94,7 @@
   ],
   "targetDefaults": {
     "test": {
-      "dependsOn": ["^build"],
-      "options": {
-        "command": "node ../../node_modules/jest/bin/jest.js"
-      }
+      "dependsOn": ["^build"]
     }
   },
   "generators": {
