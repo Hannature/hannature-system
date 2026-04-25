@@ -31,14 +31,15 @@ jobs:
       - name: Upgrade npm to latest
         run: npm install -g npm@latest
 
-      # We use `npm install` instead of `npm ci` because @nx/expo / @nx/react-native
-      # list @nx/detox as an optional dep whose transitive tree (detox,
-      # @wix-pilot/core, bunyan, …) is included on Linux but skipped on macOS.
-      # That makes the lockfile platform-sensitive, which `npm ci` rejects.
-      # `npm install --omit=optional` skips that tree on both OSes; --no-audit
-      # / --no-fund / --prefer-offline keep CI fast.
+      # We use `npm install` instead of `npm ci` because the lockfile is
+      # platform-sensitive (optional deps like @nx/detox and platform-specific
+      # native binaries like @nx/nx-linux-x64-gnu are included on Linux but
+      # skipped on macOS). `npm ci` rejects the drift; `npm install` reconciles
+      # it. We can't pass --omit=optional because Nx's native Rust binary is
+      # itself an optional dep — without it `nx` throws
+      # 'WorkspaceContext is not a constructor'.
       - name: Install
-        run: npm install --omit=optional --no-audit --no-fund --prefer-offline
+        run: npm install --no-audit --no-fund --prefer-offline
 
       # `npm install` may have updated package-lock.json (the optional @nx/detox
       # tree differs across platforms). Reset it so the cache key derived from
