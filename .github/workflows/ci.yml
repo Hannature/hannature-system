@@ -1,10 +1,9 @@
 name: CI
 
 on:
-  push:
+  pull_request:
     branches:
       - main
-  pull_request:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -25,7 +24,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: ".nvmrc"
           cache: npm
 
       - name: Upgrade npm to latest
@@ -57,7 +56,8 @@ jobs:
           # GitHub Actions caches are immutable — once a key is taken on a
           # branch, save is a silent no-op and downstream jobs restore stale
           # contents.
-          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json', '.github/workflows/ci.yml') }}
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json',
+            '.github/workflows/ci.yml') }}
 
   # ─────────────────────────────────────────────────────────────────────────────
   # Lint — all affected projects
@@ -73,7 +73,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: ".nvmrc"
 
       - name: Restore node_modules
         uses: actions/cache/restore@v4
@@ -84,7 +84,8 @@ jobs:
           # GitHub Actions caches are immutable — once a key is taken on a
           # branch, save is a silent no-op and downstream jobs restore stale
           # contents.
-          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json', '.github/workflows/ci.yml') }}
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json',
+            '.github/workflows/ci.yml') }}
 
       - uses: nrwl/nx-set-shas@v4
 
@@ -105,7 +106,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: ".nvmrc"
 
       - name: Restore node_modules
         uses: actions/cache/restore@v4
@@ -116,7 +117,8 @@ jobs:
           # GitHub Actions caches are immutable — once a key is taken on a
           # branch, save is a silent no-op and downstream jobs restore stale
           # contents.
-          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json', '.github/workflows/ci.yml') }}
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json',
+            '.github/workflows/ci.yml') }}
 
       - uses: nrwl/nx-set-shas@v4
 
@@ -137,7 +139,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: ".nvmrc"
 
       - name: Restore node_modules
         uses: actions/cache/restore@v4
@@ -148,7 +150,8 @@ jobs:
           # GitHub Actions caches are immutable — once a key is taken on a
           # branch, save is a silent no-op and downstream jobs restore stale
           # contents.
-          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json', '.github/workflows/ci.yml') }}
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json',
+            '.github/workflows/ci.yml') }}
 
       - uses: nrwl/nx-set-shas@v4
 
@@ -176,7 +179,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: ".nvmrc"
 
       - name: Restore node_modules
         uses: actions/cache/restore@v4
@@ -187,7 +190,8 @@ jobs:
           # GitHub Actions caches are immutable — once a key is taken on a
           # branch, save is a silent no-op and downstream jobs restore stale
           # contents.
-          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json', '.github/workflows/ci.yml') }}
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json',
+            '.github/workflows/ci.yml') }}
 
       - uses: nrwl/nx-set-shas@v4
 
