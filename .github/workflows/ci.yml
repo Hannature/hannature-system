@@ -31,8 +31,12 @@ jobs:
       - name: Upgrade npm to latest
         run: npm install -g npm@latest
 
+      # --omit=optional skips @nx/detox + transitive deps (detox, @wix-pilot/core,
+      # bunyan, …). They're pulled in as optional by @nx/expo and @nx/react-native;
+      # we don't run detox E2E tests, and including them makes the lockfile
+      # platform-sensitive (npm on macOS skips them, Linux pulls them in).
       - name: Install
-        run: npm ci
+        run: npm ci --omit=optional
 
       - name: Cache node_modules
         uses: actions/cache/save@v4
