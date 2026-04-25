@@ -40,6 +40,13 @@ jobs:
       - name: Install
         run: npm install --omit=optional --no-audit --no-fund --prefer-offline
 
+      # `npm install` may have updated package-lock.json (the optional @nx/detox
+      # tree differs across platforms). Reset it so the cache key derived from
+      # hashFiles('package-lock.json') matches the value the downstream jobs
+      # (which checkout fresh) compute.
+      - name: Restore lockfile from git
+        run: git checkout -- package-lock.json
+
       - name: Cache node_modules
         uses: actions/cache/save@v4
         with:
