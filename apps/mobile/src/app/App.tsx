@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
+import '../../global.css';
 import React, { useRef, useState } from 'react';
 import {
   StyleSheet,
@@ -10,8 +11,9 @@ import {
   Linking,
 } from 'react-native';
 import Svg, { G, Path } from 'react-native-svg';
+import { ThemeProvider } from './ThemeProvider.js';
 
-export const App = () => {
+const AppContent = () => {
   const [whatsNextYCoord, setWhatsNextYCoord] = useState<number>(0);
   const scrollViewRef = useRef<null | ScrollView>(null);
 
@@ -696,5 +698,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+export const App = () => (
+  <ThemeProvider>
+    <AppContent />
+  </ThemeProvider>
+);
 
 export default App;

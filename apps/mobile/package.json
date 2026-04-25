@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@expo/metro-config": "*",
+    "@hannature/design-tokens": "*",
     "@testing-library/react-native": "*",
     "expo": "*",
     "expo-splash-screen": "*",
@@ -21,10 +22,15 @@
     "jest-expo": "*",
     "metro-config": "*",
     "metro-resolver": "*",
+    "nativewind": "*",
     "react": "*",
     "react-native": "*",
+    "react-native-reanimated": "*",
     "react-native-svg": "*",
     "react-native-svg-transformer": "*",
     "react-native-web": "*"
+  },
+  "devDependencies": {
+    "tailwindcss": "*"
   }
 }
