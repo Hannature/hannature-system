@@ -16,6 +16,14 @@
     }
   },
   "nx": {
+    "targets": {
+      "test": {
+        "executor": "@nx/vitest:test",
+        "options": {
+          "configFile": "libs/ui/vitest.config.ts"
+        }
+      }
+    },
     "tags": [
       "scope:shared",
       "type:ui"

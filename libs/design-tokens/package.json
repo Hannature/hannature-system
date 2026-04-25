@@ -22,6 +22,14 @@
     }
   },
   "nx": {
+    "targets": {
+      "test": {
+        "executor": "@nx/vitest:test",
+        "options": {
+          "configFile": "libs/design-tokens/vitest.config.ts"
+        }
+      }
+    },
     "tags": [
       "scope:shared",
       "type:util"

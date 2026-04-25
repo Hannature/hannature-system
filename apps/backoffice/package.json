@@ -3,6 +3,14 @@
   "version": "0.0.1",
   "private": true,
   "nx": {
+    "targets": {
+      "test": {
+        "executor": "@nx/vitest:test",
+        "options": {
+          "configFile": "apps/backoffice/vitest.config.ts"
+        }
+      }
+    },
     "tags": [
       "scope:backoffice",
       "type:app"
