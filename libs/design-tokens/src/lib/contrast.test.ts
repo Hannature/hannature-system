@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { semanticColors } from './colors.js';
+import { palette, semanticColors } from './colors.js';
 
 function hexToRgb(hex: string): [number, number, number] {
   const value = hex.replace('#', '');
@@ -40,10 +40,22 @@ describe('WCAG 2.1 AA contrast — semantic token pairs', () => {
       threshold: WCAG_AA_NORMAL,
     },
     {
+      name: 'bodyText on cream palette',
+      fg: semanticColors.bodyText,
+      bg: palette.cream,
+      threshold: WCAG_AA_NORMAL,
+    },
+    {
       name: 'titleText on background',
       fg: semanticColors.titleText,
       bg: semanticColors.background,
       threshold: WCAG_AA_LARGE,
+    },
+    {
+      name: 'titleText on background (small text)',
+      fg: semanticColors.titleText,
+      bg: semanticColors.background,
+      threshold: WCAG_AA_NORMAL,
     },
     {
       name: 'titleText on surface',
@@ -52,9 +64,39 @@ describe('WCAG 2.1 AA contrast — semantic token pairs', () => {
       threshold: WCAG_AA_LARGE,
     },
     {
+      name: 'titleText on surface (small text)',
+      fg: semanticColors.titleText,
+      bg: semanticColors.surface,
+      threshold: WCAG_AA_NORMAL,
+    },
+    {
+      name: 'titleText on cream palette',
+      fg: semanticColors.titleText,
+      bg: palette.cream,
+      threshold: WCAG_AA_NORMAL,
+    },
+    {
       name: 'ctaForeground on cta',
       fg: semanticColors.ctaForeground,
       bg: semanticColors.cta,
+      threshold: WCAG_AA_NORMAL,
+    },
+    {
+      name: 'titleText on cta (RewardBanner body)',
+      fg: semanticColors.titleText,
+      bg: semanticColors.cta,
+      threshold: WCAG_AA_NORMAL,
+    },
+    {
+      name: 'bodyText on cta',
+      fg: semanticColors.bodyText,
+      bg: semanticColors.cta,
+      threshold: WCAG_AA_NORMAL,
+    },
+    {
+      name: 'cream on titleText (Badge success)',
+      fg: palette.cream,
+      bg: semanticColors.titleText,
       threshold: WCAG_AA_NORMAL,
     },
   ];
