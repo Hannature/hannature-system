@@ -5,3 +5,8 @@ export * from './Card/index.js';
 export * from './Input/index.js';
 export * from './Modal/index.js';
 export * from './ProgressBar/index.js';
+export * from './DayTile/index.js';
+export * from './MealCard/index.js';
+export * from './RewardBanner/index.js';
+export * from './StarCounter/index.js';
+export * from './WorkoutCard/index.js';

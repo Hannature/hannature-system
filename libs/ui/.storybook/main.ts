@@ -8,7 +8,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 const config: StorybookConfig = {
   stories: ['../src/**/*.stories.@(ts|tsx)'],
   framework: { name: '@storybook/react-vite', options: {} },
-  addons: [],
+  addons: ['@storybook/addon-a11y'],
   typescript: { reactDocgen: false },
   viteFinal: (cfg) =>
     mergeConfig(cfg, {
