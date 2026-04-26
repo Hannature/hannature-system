@@ -7,6 +7,9 @@
       "path": "../../libs/design-tokens"
     },
     {
+      "path": "../../libs/shared-types"
+    },
+    {
       "path": "../../libs/ui"
     },
     {

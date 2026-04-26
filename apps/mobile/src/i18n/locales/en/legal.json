@@ -1,0 +1,15 @@
+{
+  "version": "2026-04-26",
+  "termsOfService": {
+    "title": "Terms of Service",
+    "body": "Welcome to Hannature. By creating an account you agree to use the program in good faith and follow community guidelines. Hannature provides general wellness content, not medical advice. We may update these terms; you'll be asked to re-consent when material changes are made. Effective version 2026-04-26."
+  },
+  "privacyPolicy": {
+    "title": "Privacy Policy",
+    "body": "We collect the minimum data needed to provide your program: email, name, and the behavioral goal you select. We do not request body metrics (weight, BMI, height) at sign-up. Your data is processed under EU GDPR. You can export or delete your account from Settings at any time. Effective version 2026-04-26."
+  },
+  "marketing": {
+    "title": "Marketing communications",
+    "body": "If you opt in, we'll send occasional product updates, new recipes, and program announcements by email. You can opt out at any time in Settings, with no impact on your access to the program."
+  }
+}

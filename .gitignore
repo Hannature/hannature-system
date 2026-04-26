@@ -67,3 +67,10 @@ npm-debug.*
 web-build/
 cache/
 
+# Stray Expo prebuild output at workspace root.
+# The legitimate native projects live at apps/mobile/ios and apps/mobile/android;
+# anything at the worktree root means `expo prebuild` was run from the wrong cwd.
+/ios/
+/android/
+/app.json
+

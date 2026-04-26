@@ -1,0 +1,69 @@
+{
+  "welcome": {
+    "slides": {
+      "valueProp": {
+        "title": "Wellness, the gentle way",
+        "body": "Hannature is a behavior-first wellness program that meets you where you are."
+      },
+      "behavioral": {
+        "title": "Small habits, real change",
+        "body": "Pick a goal that matters to you. We'll guide you with daily nudges, recipes, and movement — never weight or BMI."
+      },
+      "privacy": {
+        "title": "Privacy by design",
+        "body": "You control your data. Granular consent, versioned legal text, and EU GDPR compliance from day one."
+      }
+    },
+    "cta": {
+      "getStarted": "Get started",
+      "haveAccount": "I already have an account"
+    }
+  },
+  "goal": {
+    "title": "What would you like to focus on?",
+    "subtitle": "Pick one to start. You can change this any time.",
+    "options": {
+      "move_more": {
+        "label": "Move more",
+        "description": "Build a sustainable activity habit at your own pace."
+      },
+      "eat_better": {
+        "label": "Eat better",
+        "description": "Discover recipes and nutrition guidance you'll actually enjoy."
+      },
+      "sleep_better": {
+        "label": "Sleep better",
+        "description": "Improve sleep quality with calmer evenings and steady routines."
+      },
+      "reduce_stress": {
+        "label": "Reduce stress",
+        "description": "Practice breathing, mindfulness, and gentle daily resets."
+      },
+      "build_habits": {
+        "label": "Build habits",
+        "description": "Stack small wins into long-term change you can feel."
+      }
+    },
+    "continue": "Continue"
+  },
+  "consent": {
+    "title": "A few quick consents",
+    "subtitle": "We're transparent about what we collect and why. Tap any item to read the full text.",
+    "items": {
+      "termsOfService": {
+        "label": "I accept the Terms of Service",
+        "required": "Required"
+      },
+      "privacyPolicy": {
+        "label": "I accept the Privacy Policy",
+        "required": "Required"
+      },
+      "marketing": {
+        "label": "Send me occasional product news",
+        "optional": "Optional"
+      }
+    },
+    "cta": "Accept & continue",
+    "version": "Legal version: {{version}}"
+  }
+}
