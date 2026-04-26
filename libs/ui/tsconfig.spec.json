@@ -2,14 +2,20 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "./out-tsc/vitest",
+    "jsx": "react-jsx",
+    "lib": ["es2022", "dom", "dom.iterable"],
     "types": ["vitest/globals", "node"],
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "noUnusedLocals": false
   },
   "include": [
     "vitest.config.ts",
     "src/**/*.test.ts",
+    "src/**/*.test.tsx",
     "src/**/*.spec.ts",
-    "src/**/*.d.ts"
+    "src/**/*.spec.tsx",
+    "src/**/*.d.ts",
+    "src/test-setup.ts"
   ],
   "references": [
     {
