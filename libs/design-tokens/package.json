@@ -1,6 +1,7 @@
 {
   "name": "@hannature/design-tokens",
   "version": "0.1.0",
+  "private": true,
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -34,13 +35,6 @@
       "type:util"
     ]
   },
-  "publishConfig": {
-    "access": "restricted"
-  },
-  "files": [
-    "dist",
-    "README.md"
-  ],
   "dependencies": {
     "tslib": "^2.3.0"
   },

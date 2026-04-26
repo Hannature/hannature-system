@@ -8,7 +8,6 @@ on:
 permissions:
   contents: write
   pull-requests: write
-  id-token: write
 
 concurrency:
   group: release
@@ -16,7 +15,7 @@ concurrency:
 
 jobs:
   release:
-    name: Version & publish via Changesets
+    name: Version via Changesets
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -27,23 +26,15 @@ jobs:
         with:
           node-version-file: ".nvmrc"
           cache: npm
-          registry-url: "https://registry.npmjs.org"
 
       - name: Install
         run: npm install --no-audit --no-fund --prefer-offline
 
-      - name: Build publishable libs
-        run: |
-          npx nx run-many -t build \
-            --projects=@hannature/design-tokens,@hannature/ui
-
-      - name: Create Release Pull Request or Publish
+      - name: Create Release Pull Request
         uses: changesets/action@v1
         with:
           version: npx changeset version
-          publish: npx changeset publish
           commit: "chore(release): version packages"
           title: "chore(release): version packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
