@@ -1,0 +1,18 @@
+{
+  "actions": {
+    "continue": "Continue",
+    "back": "Back",
+    "skip": "Skip",
+    "cancel": "Cancel",
+    "close": "Close",
+    "done": "Done",
+    "submit": "Submit"
+  },
+  "languages": {
+    "en": "English",
+    "fr": "Français",
+    "de": "Deutsch",
+    "es": "Español",
+    "it": "Italiano"
+  }
+}

@@ -1,4 +1,5 @@
 import type { NavigatorScreenParams } from '@react-navigation/native';
+import type { BehavioralGoal } from '@hannature/shared-types';
 
 export type TabParamList = {
   Sport: undefined;
@@ -12,6 +13,14 @@ export type DrawerParamList = {
   Settings: undefined;
   Rewards: undefined;
   Legal: undefined;
+};
+
+export type AuthParamList = {
+  Welcome: undefined;
+  Register: undefined;
+  Login: undefined;
+  OnboardingGoal: undefined;
+  OnboardingConsent: { goal: BehavioralGoal };
 };
 
 declare global {
