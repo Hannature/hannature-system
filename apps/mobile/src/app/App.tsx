@@ -11,7 +11,7 @@ import {
   Linking,
 } from 'react-native';
 import Svg, { G, Path } from 'react-native-svg';
-import { ThemeProvider } from './ThemeProvider.js';
+import { ThemeProvider } from './ThemeProvider';
 
 const AppContent = () => {
   const [whatsNextYCoord, setWhatsNextYCoord] = useState<number>(0);
