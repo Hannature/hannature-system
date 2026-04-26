@@ -88,9 +88,14 @@
   "dependencies": {
     "@expo/metro-config": "^55.0.17",
     "@expo/metro-runtime": "^55.0.10",
+    "@expo/vector-icons": "^15.0.2",
     "@nestjs/common": "^11.0.0",
     "@nestjs/core": "^11.0.0",
     "@nestjs/platform-express": "^11.0.0",
+    "@react-navigation/bottom-tabs": "^7.15.10",
+    "@react-navigation/drawer": "^7.9.9",
+    "@react-navigation/native": "^7.2.2",
+    "@tanstack/react-query": "^5.100.5",
     "axios": "^1.6.0",
     "expo": "~55.0.17",
     "expo-splash-screen": "^55.0.19",
@@ -100,10 +105,14 @@
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "react-native": "0.83.6",
+    "react-native-gesture-handler": "~2.30.0",
+    "react-native-safe-area-context": "~5.6.2",
+    "react-native-screens": "~4.23.0",
     "react-native-svg": "15.15.3",
     "react-native-svg-transformer": "~1.5.1",
     "react-native-web": "~0.21.0",
     "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.0"
+    "rxjs": "^7.8.0",
+    "zustand": "^5.0.12"
   }
 }
