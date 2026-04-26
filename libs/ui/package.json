@@ -25,6 +25,7 @@
       },
       "build-storybook": {
         "executor": "nx:run-commands",
+        "dependsOn": ["^build"],
         "options": {
           "command": "storybook build -c libs/ui/.storybook -o dist/storybook/ui"
         },
