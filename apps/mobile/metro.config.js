@@ -20,6 +20,27 @@ const customConfig = {
   resolver: {
     assetExts: assetExts.filter((ext) => ext !== 'svg'),
     sourceExts: [...sourceExts, 'cjs', 'mjs', 'svg'],
+    // Workspace libs (e.g. @hannature/ui) target NodeNext, so their barrel
+    // files use explicit `./Foo.js` imports. Without this, Metro takes the
+    // `.js` literally and never tries `Foo.native.tsx`, which silently picks
+    // the web variant on native and crashes at render time.
+    resolveRequest: (context, moduleName, platform) => {
+      if (
+        (moduleName.startsWith('./') || moduleName.startsWith('../')) &&
+        moduleName.endsWith('.js')
+      ) {
+        try {
+          return context.resolveRequest(
+            context,
+            moduleName.slice(0, -3),
+            platform,
+          );
+        } catch {
+          // fall through to the default resolver below
+        }
+      }
+      return context.resolveRequest(context, moduleName, platform);
+    },
   },
 };
 
