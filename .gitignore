@@ -45,6 +45,9 @@ Thumbs.db
 
 test-output
 
+# TypeScript build info
+*.tsbuildinfo
+
 # Next.js
 .next
 out

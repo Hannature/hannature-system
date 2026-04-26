@@ -13,7 +13,13 @@
   },
   "dependencies": {
     "@expo/metro-config": "*",
+    "@expo/vector-icons": "*",
     "@hannature/design-tokens": "*",
+    "@hannature/ui": "*",
+    "@react-navigation/bottom-tabs": "*",
+    "@react-navigation/drawer": "*",
+    "@react-navigation/native": "*",
+    "@tanstack/react-query": "*",
     "@testing-library/react-native": "*",
     "expo": "*",
     "expo-splash-screen": "*",
@@ -25,10 +31,14 @@
     "nativewind": "*",
     "react": "*",
     "react-native": "*",
+    "react-native-gesture-handler": "*",
     "react-native-reanimated": "*",
+    "react-native-safe-area-context": "*",
+    "react-native-screens": "*",
     "react-native-svg": "*",
     "react-native-svg-transformer": "*",
-    "react-native-web": "*"
+    "react-native-web": "*",
+    "zustand": "*"
   },
   "devDependencies": {
     "@types/jest": "*",

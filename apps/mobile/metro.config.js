@@ -33,7 +33,41 @@ const nxConfig = withNxMetro(mergeConfig(defaultConfig, customConfig), {
   watchFolders: [],
 });
 
-module.exports = withNativeWind(nxConfig, {
+// Workspace libs (@hannature/ui) target NodeNext, so their compiled barrels
+// use explicit `./Foo.js` imports. When that file exists (it does, in dist/),
+// Metro treats it as fully resolved and never tries the `.native.js` sibling
+// — so the web Button (raw <button>) gets bundled on iOS and the app crashes
+// at render time. Wrap Nx's resolver: on native platforms, try `Foo.native.js`
+// first, then fall back to the original request.
+const nxResolveRequest = nxConfig.resolver.resolveRequest;
+
+const wrappedResolveRequest = (context, moduleName, platform) => {
+  if (
+    platform &&
+    platform !== 'web' &&
+    (moduleName.startsWith('./') || moduleName.startsWith('../')) &&
+    moduleName.endsWith('.js') &&
+    !moduleName.endsWith('.native.js')
+  ) {
+    const nativeVariant = `${moduleName.slice(0, -3)}.native.js`;
+    try {
+      return nxResolveRequest(context, nativeVariant, platform);
+    } catch {
+      // fall through to the original request
+    }
+  }
+  return nxResolveRequest(context, moduleName, platform);
+};
+
+const finalConfig = {
+  ...nxConfig,
+  resolver: {
+    ...nxConfig.resolver,
+    resolveRequest: wrappedResolveRequest,
+  },
+};
+
+module.exports = withNativeWind(finalConfig, {
   input: './global.css',
   configPath: './tailwind.config.ts',
 });
